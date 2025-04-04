@@ -6,8 +6,8 @@ from zipfile import ZipFile
 #from dotenv import load_dotenv
 #load_dotenv()
 
-#from src.logger import logging
-#from src.exception import CustomException
+from src.logger import logging
+from src.exception import CustomException
 #from src.utils import download_data_github
 #from logger import logging
 #from exception import CustomException
@@ -26,7 +26,7 @@ dataset_url= "https://raw.githubusercontent.com/Luismbpr/datasets_001/refs/heads
 file_name='students_performance_0760.csv'
 #path_to_save='/Users/luis/Documents/Programming/dev/0760 Complete MLOps Bootcamp With 10 Plus End To End ML Projects Krish Naik/venv_0760_Complete_MLOps_Bootcamp_Krish_Naik_312_01/0760_Course/Section 20 End To End DS Project implementation With Mulitple AWS, Azure Deployment/venv_0760_20_01_312_001/0760_20_01_ML_Students_Performance/notebooks/data/'
 
-path_to_save_nofilename= os.path.join(os.getcwd(), 'notebooks','data')
+path_to_save_nofilename= os.path.join(os.getcwd(), 'notebook','data')
 
 def download_data_github(url:str,path_to_save:str, filename_tosave:str):
     """
