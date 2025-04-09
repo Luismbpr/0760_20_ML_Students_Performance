@@ -34,6 +34,12 @@ def evaluate_models(X_train, y_train, X_test, y_test, models, param):
     Selects the best models trains the model and performs metric evaluation
     from src.utils import evaluate_models
     evaluate_models(X_train=, y_train=, X_test=, y_test=, models=, param=)
+
+    Args
+      f
+
+    Returns
+      Report: dict Report with 
     """
     try:
         #pass
@@ -56,7 +62,7 @@ def evaluate_models(X_train, y_train, X_test, y_test, models, param):
             train_model_score = r2_score(y_true=y_train, 
             y_pred=y_train_pred)
             test_model_score = r2_score(y_true=y_test, y_pred=y_test_pred)
-
+            
             report[list(models.keys())[i]] = test_model_score
         
         return report
