@@ -88,31 +88,41 @@ class ModelTrainer:
                 
             }
 
-            model_report:dict=evaluate_models(X_train=X_train,y_train=y_train,X_test=X_test,y_test=y_test,
-                                             models=models,param=params)
+            model_report:dict=evaluate_models(X_train=X_train,
+                                              y_train=y_train,
+                                              X_test=X_test,
+                                              y_test=y_test,
+                                              models=models,
+                                              param=params)
             
+            ###Model Report Returns:
+            ###report[list(models.keys())[i]] = test_model_score
+
             ## To get best model score from dict
             best_model_score = max(sorted(model_report.values()))
-            logging.info("Getting the best model score")
+            #logging.info("Getting the best model score")
+
             ##To get the best model name from dict
-            best_model_name = list(model_report.keys())[
-                list(model_report.values()).index(best_model_score)
-            ]
+            ### model_report.keys()[getting index of best model score]
+            best_model_name = list(model_report.keys())[list(model_report.values()).index(best_model_score)]
+            ## Getting from all models the model name
             best_model = models[best_model_name]
             
-            print(f"Best Model Score: {best_model}")
+            print(f"Best Model Score:\n{best_model}")
+            #print("Best Model Score:          ", end=" ")
+            #print(best_model)
 
             if best_model_score<0.6:
-                raise CustomException("Best Model Score is less than 0.6 Not good enough to be deployed.")
+                raise CustomException("Best Model Score is less than 0.6. Model is not good enough to be deployed.")
             
+            ## Dumping the model in a pickle file
             save_object(
                 file_path=self.model_trainer_config.trained_model_file_path,
                 obj=best_model
             )
 
-            ## Create prediction with best model
+            ## Create prediction with best model and perform evaluation
             predicted_test = best_model.predict(X_test)
-
             r2_square_test = r2_score(y_true=y_test, y_pred=predicted_test)
             
             return r2_square_test
