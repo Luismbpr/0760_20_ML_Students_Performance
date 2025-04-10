@@ -21,7 +21,7 @@ class DataTransformationConfig:
 
 class DataTransformation:
     def __init__(self):
-        self.data_transformation_config=DataTransformationConfig
+        self.data_transformation_config=DataTransformationConfig()
     
     def get_data_transformer_object(self):
         """
@@ -80,7 +80,8 @@ class DataTransformation:
             logging.info(f"Categorical columns: {categorical_columns}")
             
             ## Merging both pipelines
-            preprocessor = ColumnTransformer([
+            preprocessor = ColumnTransformer(
+                [
                 ("num_pipeline", num_pipeline, numerical_columns),
                 ("cat_pipeline", cat_pipeline, categorical_columns)
                 ]
@@ -116,7 +117,7 @@ class DataTransformation:
             preprocessing_obj = self.get_data_transformer_object()
 
             target_column_name = "math_score"
-            #numerical_columns= ["reading_score","writing_score"]
+            numerical_columns= ["reading_score","writing_score"]
             #categorical_columns=["gender",
                                  #"race_ethnicity",
                                  #"parental_level_of_education",
@@ -139,10 +140,14 @@ class DataTransformation:
 
             ## Concat Transformed data with target feature
             train_arr = np.c_[
-                input_feature_train_arr, np.array(target_feature_train_df)
+                input_feature_train_arr,
+                np.array(target_feature_train_df)
             ]
-            test_arr = np.c_[input_feature_test_arr, np.array(target_feature_test_df)]
+            test_arr = np.c_[input_feature_test_arr,
+                             np.array(target_feature_test_df)
+            ]
             
+            logging.info(f"Train and Test Array Created")
             ## Create/get function in utils/save_object()
             save_object(
                 file_path=self.data_transformation_config.preprocessor_obj_file_path,

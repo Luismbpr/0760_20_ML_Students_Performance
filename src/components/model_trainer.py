@@ -24,7 +24,7 @@ from src.utils import save_object, evaluate_models
 
 @dataclass
 class ModelTrainerConfig:
-    trained_model_file_path: str = os.path.join("artifacts", "model.pkl")
+    trained_model_file_path = os.path.join("artifacts", "model.pkl")
 
 class ModelTrainer:
     def __init__(self):
@@ -33,22 +33,22 @@ class ModelTrainer:
     def initiate_model_trainer(self, train_array, test_array):
         try:
             #pass
-            logging.info("Started Model Trainer")
+            logging.info("Model Trainer Started")
+            logging.info("Splitting the Train and Test Arrays")
             X_train, y_train, X_test, y_test = (
                 train_array[:, :-1],
                 train_array[:, -1],
                 test_array[:, :-1],
-                test_array[:, -1],
+                test_array[:, -1]
             )
             models = {
-                "LinearRegression":LinearRegression(),
-                "DecisionTreeRegressor":DecisionTreeRegressor(),
-                "KNeighborsRegressor":KNeighborsRegressor(),
-                "AdaBoostRegressor":AdaBoostRegressor(),
-                "GradientBoostingRegressor":GradientBoostingRegressor(),
-                "RandomForestRegressor":RandomForestRegressor(),
-                "CatBoostRegressor":CatBoostRegressor(verbose=False),
-                "XGBRegressor":XGBRegressor(),
+                "Random Forest": RandomForestRegressor(),
+                "Decision Tree": DecisionTreeRegressor(),
+                "Gradient Boosting": GradientBoostingRegressor(),
+                "Linear Regression": LinearRegression(),
+                "XGBRegressor": XGBRegressor(),
+                "CatBoosting Regressor": CatBoostRegressor(verbose=False),
+                "AdaBoost Regressor": AdaBoostRegressor(),
             }
             params={
                 "Decision Tree": {
@@ -69,7 +69,8 @@ class ModelTrainer:
                     #'max_features':['auto','sqrt','log2'],
                     'n_estimators': [8,16,32,64,128,256]
                 },
-                "Linear Regression":{},
+                #"Linear Regression":{},
+                "LinearRegression":{},
                 "XGBRegressor":{
                     'learning_rate':[.1,.01,.05,.001],
                     'n_estimators': [8,16,32,64,128,256]
@@ -85,10 +86,15 @@ class ModelTrainer:
                     'n_estimators': [8,16,32,64,128,256]
                 }
             }
+
             ## Create model_report 
             model_report:dict=evaluate_models(X_train=X_train,
-                                              y_train=y_train,X_test=X_test,y_test=y_test,
-                                              models=models,param=params)
+                                              y_train=y_train,
+                                              X_test=X_test,
+                                              y_test=y_test,
+                                              models=models,
+                                              param=params)
+            
             ## To get best model score from dict
             best_model_score = max(sorted(model_report.values()))
             
@@ -98,6 +104,8 @@ class ModelTrainer:
                 list(model_report.values()).index(best_model_score)
             ]
             best_model = models[best_model_name]
+            
+            print(f"Best Model Score: {best_model}")
 
             if best_model_score<0.6:
                 raise CustomException("Best Model Score is less than 0.6 Not good enough to be deployed.")
