@@ -28,47 +28,92 @@ def save_object(file_path, obj):
             pickle.dump(obj, file_obj)
     except Exception as e:
         raise CustomException(e,sys)
+    
 
-
-def evaluate_models(X_train, y_train, X_test, y_test, models, param):
-    """
-    Evaluates models, performs Grid Search, Selects the best parameters
-    Selects the best models trains the model and performs metric evaluation
-    from src.utils import evaluate_models
-    evaluate_models(X_train=, y_train=, X_test=, y_test=, models=, param=)
-
-    Args
-      f
-
-    Returns
-      Report: dict Report with 
-    """
+def evaluate_models(X_train, y_train,X_test,y_test,models,param):
     try:
-        #pass
         report = {}
 
         for i in range(len(list(models))):
-            #print(i)##for i in range(len(list(models))):
             model = list(models.values())[i]
-            para = param[list(models.keys())[i]]
+            para=param[list(models.keys())[i]]
 
-            gs = GridSearchCV(estimator=model, param_grid=para, cv=3)
-            gs.fit(X_train, y_train)
+            gs = GridSearchCV(model,para,cv=3)
+            gs.fit(X_train,y_train)
 
             model.set_params(**gs.best_params_)
-            #model.git(X_train, y_train)## Error...
             model.fit(X_train,y_train)
 
+            #model.fit(X_train, y_train)  # Train model
+
             y_train_pred = model.predict(X_train)
+
             y_test_pred = model.predict(X_test)
 
-            train_model_score = r2_score(y_true=y_train, 
-            y_pred=y_train_pred)
-            test_model_score = r2_score(y_true=y_test, y_pred=y_test_pred)
-            
+            train_model_score = r2_score(y_train, y_train_pred)
+
+            test_model_score = r2_score(y_test, y_test_pred)
+
             report[list(models.keys())[i]] = test_model_score
-        logging.info(f"Returning Report from utils.evaluate_models function")
+
         return report
-    
+
     except Exception as e:
         raise CustomException(e, sys)
+
+
+
+# def evaluate_models(X_train, y_train, X_test, y_test, models, param):
+#     """
+#     Evaluates models, performs Grid Search, Selects the best parameters
+#     Selects the best models trains the model and performs metric evaluation
+#     from src.utils import evaluate_models
+#     evaluate_models(X_train=, y_train=, X_test=, y_test=, models=, param=)
+
+#     Args
+#       X_train
+#       y_train
+#       X_test
+#       y_test
+#       models
+#       param
+
+#       Calculates R2_Score
+
+#     Returns
+#       Report: dict Report
+    
+#       from src.utils import evaluate_models
+#       evaluate_models(X_train=, y_train=, X_test=, y_test=, models=, param=)
+#     """
+#     try:
+#         #pass
+#         report = {}
+
+#         for i in range(len(list(models))):
+#             model = list(models.values())[i]
+#             para=param[list(models.keys())[i]]
+
+#             gs = GridSearchCV(model, para, cv=3)
+#             gs.fit(X_train, y_train)
+#             #model.fit(X_train, y_train)
+            
+#             ## Getting best parameters and training the model with them
+#             model.set_params(**gs.best_params_)
+#             model.fit(X_train,y_train)
+
+#             y_train_pred = model.predict(X_train)
+#             y_test_pred = model.predict(X_test)
+
+#             train_model_score = r2_score(y_train, 
+#                                          y_train_pred)
+            
+#             test_model_score = r2_score(y_test,
+#                                         y_test_pred)
+            
+#             report[list(models.keys())[i]] = test_model_score
+#         logging.info(f"Returning Report from utils.evaluate_models function")
+#         return report
+    
+#     except Exception as e:
+#         raise CustomException(e, sys)
