@@ -4,9 +4,9 @@ import pandas as pd
 from flask import Flask, request, render_template
 from sklearn.preprocessing import StandardScaler
 
-#from src.pipeline.predict_pipeline import CustomData, PredictPipeline
-from src.pipeline.predict_pipeline import CustomData
-from src.pipeline.predict_pipeline import PredictPipeline
+from src.pipeline.predict_pipeline import CustomData, PredictPipeline
+#from src.pipeline.predict_pipeline import CustomData
+#from src.pipeline.predict_pipeline import PredictPipeline
 
 application = Flask(__name__)
 app = application
@@ -33,6 +33,7 @@ def predict_datapoint():
         return render_template('home.html')
     else:
         #pass
+        ## When doing the POST - Read all the input values from the html
         ## from src.pipeline.predict_pipeline
         data = CustomData(
             gender=request.form.get('gender'),
@@ -43,6 +44,8 @@ def predict_datapoint():
             reading_score=float(request.form.get('reading_score')),
             writing_score=float(request.form.get('writing_score')),
         )
+        print(data)
+        ## Convert the data into a Dataframe
         ## CustomData.get_data_as_data_frame
         pred_df = data.get_data_as_data_frame()
         print(pred_df)
@@ -56,9 +59,12 @@ def predict_datapoint():
         #print(f"Results for Pred [0] {results[0]}")
         #print(f"Results for Pred [0] {np.round(results[0], 2)}")
         results_rounded = np.round(results[0], 2)
+        
+        ## Return the output - from the list format
+        ## Need to read this value in the home.html {{result}}
         #return render_template('home.html', results=results[0])
         return render_template('home.html', results=results_rounded)
-    
+
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port="8080")

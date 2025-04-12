@@ -11,6 +11,10 @@ class PredictPipeline:
 
     def predict(self, features):
         """
+        Loads the model - Trained model
+        Loads the preprocessor - Scaler for categorical and numerical columns
+
+
         from src.pipeline.predict_pipeline import predict
         predict(features=)
         """
@@ -18,11 +22,13 @@ class PredictPipeline:
             #pass
             model_path=os.path.join("artifacts", "model.pkl")
             preprocessor_path = os.path.join("artifacts","preprocessor.pkl")
+
             print("Before Loading Model and preprocessor")
-            logging.info("predict_pipeline - Before Loading #model and preprocessor")
+            logging.info("predict_pipeline - Before Loading model and preprocessor")
             model = load_object(file_path=model_path)
             preprocessor=load_object(file_path=preprocessor_path)
             print("After Loading model and preprocessor")
+            
             #logging.info("predict_pipeline - After Loading model and preprocessor")
             #logging.info("predict_pipeline - Scaling Data")
             print("Before Scaling Data")
@@ -48,13 +54,15 @@ class CustomData:
     def __init__(self,
                  gender: str,
                  race_ethnicity: str,
-                 parental_level_of_education:str,
+                 parental_level_of_education: str,
                  lunch: str,
                  test_preparation_course: str,
                  reading_score: int,
                  writing_score: int,
                  ):
          """
+         It is responsible in mapping all the inputs that we give in the html to the backend
+
          from src.pipeline.predict_pipeline import CustomData
          CustomData.get_data_as_data_frame(gender=,race_ethnicity=,
          parental_level_of_education=, lunch=, test_preparation_course=, reading_score=, writing_score=)
@@ -68,6 +76,20 @@ class CustomData:
          self.writing_score = writing_score
     
     def get_data_as_data_frame(self):
+        """
+        Returns all the inputs in the form of a DataFrame
+        This is required since the model is trained in the form as a DataFrame
+
+        Will create a dictionary
+        {"feature_name":[input from html],
+         "feature_name":[input from html],
+         ...}
+        Args
+          .
+        
+        Returns
+          .
+        """
         try:
             #pass
             custom_data_input_dict = {
