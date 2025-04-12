@@ -59,6 +59,14 @@ def save_object(file_path, obj):
     
 
 def load_object(file_path):
+    """
+    Loads object. Loads pickle file object
+    Args
+      file_path: str - Object file path to be loaded
+    
+    from src.utils import load_object
+    load_object(file_path=)
+    """
     try:
         #pass
         with open(file_path, "rb") as file_obj:
@@ -69,7 +77,7 @@ def load_object(file_path):
 
 
 
-def evaluate_models(X_train, y_train,X_test,y_test,models,param):
+def evaluate_models(X_train, y_train, X_test, y_test, models, param):
     try:
         report = {}
 
@@ -99,11 +107,10 @@ def evaluate_models(X_train, y_train,X_test,y_test,models,param):
             y_test_pred = model.predict(X_test)
 
             train_model_score = r2_score(y_train, y_train_pred)
-
             test_model_score = r2_score(y_test, y_test_pred)
 
             report[list(models.keys())[i]] = test_model_score
-
+        
         return report
 
     except Exception as e:

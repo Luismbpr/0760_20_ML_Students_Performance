@@ -1,0 +1,48 @@
+[ 2025-04-11 19:30:10,562 ] 97 werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://127.0.0.1:8080
+[ 2025-04-11 19:30:10,562 ] 97 werkzeug - INFO - [33mPress CTRL+C to quit[0m
+[ 2025-04-11 19:30:16,162 ] 97 werkzeug - INFO - 127.0.0.1 - - [11/Apr/2025 19:30:16] "GET / HTTP/1.1" 200 -
+[ 2025-04-11 19:30:18,918 ] 97 werkzeug - INFO - 127.0.0.1 - - [11/Apr/2025 19:30:18] "[33mGET /index HTTP/1.1[0m" 404 -
+[ 2025-04-11 19:30:21,302 ] 97 werkzeug - INFO - 127.0.0.1 - - [11/Apr/2025 19:30:21] "GET /predictdata HTTP/1.1" 200 -
+[ 2025-04-11 19:30:31,555 ] 23 root - INFO - predict_pipeline - Before Loading model and preprocessor
+[ 2025-04-11 19:30:31,555 ] 875 app - ERROR - Exception on /predictdata [POST]
+Traceback (most recent call last):
+  File "/Users/luis/Documents/Programming/dev/0760 Complete MLOps Bootcamp With 10 Plus End To End ML Projects Krish Naik/venv_0760_Complete_MLOps_Bootcamp_Krish_Naik_312_01/0760_Course/Section 20 End To End DS Project implementation With Mulitple AWS, Azure Deployment/0760_20_01_ML_Students_Performance/src/utils.py", line 72, in load_object
+    with open(file_path, "rb") as file_obj:
+         ^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'artifacts/models.pkl'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/luis/Documents/Programming/dev/0760 Complete MLOps Bootcamp With 10 Plus End To End ML Projects Krish Naik/venv_0760_Complete_MLOps_Bootcamp_Krish_Naik_312_01/0760_Course/Section 20 End To End DS Project implementation With Mulitple AWS, Azure Deployment/0760_20_01_ML_Students_Performance/src/pipeline/predict_pipeline.py", line 24, in predict
+    model = load_object(file_path=model_path)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/luis/Documents/Programming/dev/0760 Complete MLOps Bootcamp With 10 Plus End To End ML Projects Krish Naik/venv_0760_Complete_MLOps_Bootcamp_Krish_Naik_312_01/0760_Course/Section 20 End To End DS Project implementation With Mulitple AWS, Azure Deployment/0760_20_01_ML_Students_Performance/src/utils.py", line 76, in load_object
+    raise CustomException(e, sys)
+src.exception.CustomException: Error occured in python script name [/Users/luis/Documents/Programming/dev/0760 Complete MLOps Bootcamp With 10 Plus End To End ML Projects Krish Naik/venv_0760_Complete_MLOps_Bootcamp_Krish_Naik_312_01/0760_Course/Section 20 End To End DS Project implementation With Mulitple AWS, Azure Deployment/0760_20_01_ML_Students_Performance/src/utils.py] line number [72] error message[[Errno 2] No such file or directory: 'artifacts/models.pkl']
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/luis/miniforge3/envs/venv_0760_20_01_ML_StudPerf/lib/python3.11/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/luis/miniforge3/envs/venv_0760_20_01_ML_StudPerf/lib/python3.11/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/luis/miniforge3/envs/venv_0760_20_01_ML_StudPerf/lib/python3.11/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/luis/miniforge3/envs/venv_0760_20_01_ML_StudPerf/lib/python3.11/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/luis/Documents/Programming/dev/0760 Complete MLOps Bootcamp With 10 Plus End To End ML Projects Krish Naik/venv_0760_Complete_MLOps_Bootcamp_Krish_Naik_312_01/0760_Course/Section 20 End To End DS Project implementation With Mulitple AWS, Azure Deployment/0760_20_01_ML_Students_Performance/app.py", line 53, in predict_datapoint
+    results = predict_pipeline.predict(features=pred_df)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/luis/Documents/Programming/dev/0760 Complete MLOps Bootcamp With 10 Plus End To End ML Projects Krish Naik/venv_0760_Complete_MLOps_Bootcamp_Krish_Naik_312_01/0760_Course/Section 20 End To End DS Project implementation With Mulitple AWS, Azure Deployment/0760_20_01_ML_Students_Performance/src/pipeline/predict_pipeline.py", line 35, in predict
+    raise CustomException(e,sys)
+src.exception.CustomException: Error occured in python script name [/Users/luis/Documents/Programming/dev/0760 Complete MLOps Bootcamp With 10 Plus End To End ML Projects Krish Naik/venv_0760_Complete_MLOps_Bootcamp_Krish_Naik_312_01/0760_Course/Section 20 End To End DS Project implementation With Mulitple AWS, Azure Deployment/0760_20_01_ML_Students_Performance/src/pipeline/predict_pipeline.py] line number [24] error message[Error occured in python script name [/Users/luis/Documents/Programming/dev/0760 Complete MLOps Bootcamp With 10 Plus End To End ML Projects Krish Naik/venv_0760_Complete_MLOps_Bootcamp_Krish_Naik_312_01/0760_Course/Section 20 End To End DS Project implementation With Mulitple AWS, Azure Deployment/0760_20_01_ML_Students_Performance/src/utils.py] line number [72] error message[[Errno 2] No such file or directory: 'artifacts/models.pkl']]
+[ 2025-04-11 19:30:31,557 ] 97 werkzeug - INFO - 127.0.0.1 - - [11/Apr/2025 19:30:31] "[35m[1mPOST /predictdata HTTP/1.1[0m" 500 -
