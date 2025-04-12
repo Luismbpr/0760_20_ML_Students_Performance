@@ -52,7 +52,12 @@ def predict_datapoint():
         print("Mid Prediction")
         results = predict_pipeline.predict(features=pred_df)
         print("After Prediction")
-        return render_template('home.html', results=results[0])
+        #print(f"Results for Pred {results}")
+        #print(f"Results for Pred [0] {results[0]}")
+        #print(f"Results for Pred [0] {np.round(results[0], 2)}")
+        results_rounded = np.round(results[0], 2)
+        #return render_template('home.html', results=results[0])
+        return render_template('home.html', results=results_rounded)
     
 
 if __name__ == "__main__":

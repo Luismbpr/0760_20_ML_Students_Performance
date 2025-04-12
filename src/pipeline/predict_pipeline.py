@@ -18,16 +18,18 @@ class PredictPipeline:
             #pass
             model_path=os.path.join("artifacts", "model.pkl")
             preprocessor_path = os.path.join("artifacts","preprocessor.pkl")
-            print("Before Loading")
-            logging.info("predict_pipeline - Before Loading model and preprocessor")
+            print("Before Loading Model and preprocessor")
+            logging.info("predict_pipeline - Before Loading #model and preprocessor")
             model = load_object(file_path=model_path)
             preprocessor=load_object(file_path=preprocessor_path)
-            print("After Loading")
-            logging.info("predict_pipeline - After Loading model and preprocessor")
-            logging.info("predict_pipeline - Scaling Data")
+            print("After Loading model and preprocessor")
+            #logging.info("predict_pipeline - After Loading model and preprocessor")
+            #logging.info("predict_pipeline - Scaling Data")
+            print("Before Scaling Data")
             data_scaled = preprocessor.transform(features)
             preds = model.predict(data_scaled)
-            logging.info("predict_pipeline - Scaling Data")
+            print("After Scaling Data")
+            #logging.info("predict_pipeline - Scaling Data")
             return preds
         
         except Exception as e:
@@ -46,7 +48,7 @@ class CustomData:
     def __init__(self,
                  gender: str,
                  race_ethnicity: str,
-                 parental_level_of_education,
+                 parental_level_of_education:str,
                  lunch: str,
                  test_preparation_course: str,
                  reading_score: int,
@@ -77,7 +79,7 @@ class CustomData:
                 "reading_score": [self.reading_score],
                 "writing_score": [self.writing_score],
             }
-            
+
             return pd.DataFrame(custom_data_input_dict)
         
         except Exception as e:
